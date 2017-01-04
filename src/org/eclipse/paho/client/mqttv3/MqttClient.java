@@ -25,7 +25,6 @@ import org.eclipse.paho.client.mqttv3.internal.MemoryPersistence;
 import org.eclipse.paho.client.mqttv3.internal.NetworkModule;
 import org.eclipse.paho.client.mqttv3.internal.SSLNetworkModule;
 import org.eclipse.paho.client.mqttv3.internal.TCPNetworkModule;
-import org.eclipse.paho.client.mqttv3.internal.comms.MqttDirectException;
 //import org.eclipse.paho.client.mqttv3.internal.security.SSLSocketFactoryFactory;//m2mgo
 import org.eclipse.paho.client.mqttv3.internal.trace.Trace;
 import org.eclipse.paho.client.mqttv3.internal.wire.MqttConnect;

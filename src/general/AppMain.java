@@ -5,11 +5,14 @@
  */
 package general;
 
-import choral.io.CheckUpgrade;
-import com.cinterion.io.BearerControl;
-import com.m2mgo.util.GPRSConnectOptions;
+//import choral.io.CheckUpgrade;
+//import com.cinterion.io.BearerControl;
+//import com.m2mgo.util.GPRSConnectOptions;
 import java.util.Date;
+
 import javax.microedition.midlet.*;
+
+import com.m2mgo.util.GPRSConnectOptions;
 
 /**
  * Main application class.
@@ -47,11 +50,11 @@ public class AppMain extends MIDlet {
 
     protected void startApp() throws MIDletStateChangeException {
         AppMain.appMain = this;
-        CheckUpgrade fw = new CheckUpgrade("");
+        //CheckUpgrade fw = new CheckUpgrade("");
 
         Settings settings = Settings.getInstance();
         SLog.log(SLog.Informational, "AppMain", "Running "
-                + MicroManager.getInstance().getIMEI()
+                //+ MicroManager.getInstance().getIMEI()
                 + " " + getAppProperty("MIDlet-Version")
                 + " " + DateFormatter.isoString(new Date()));
 
@@ -66,16 +69,16 @@ public class AppMain extends MIDlet {
 
         SocketGPRSThread.getInstance().put(
                 settings.getSetting("publish", "owntracks/gw/")
-                + settings.getSetting("clientID", MicroManager.getInstance().getIMEI())
+                + settings.getSetting("clientID", "imei") //MicroManager.getInstance().getIMEI())
                 + "/start",
                 settings.getSetting("qos", 1),
                 settings.getSetting("retain", true),
-                (MicroManager.getInstance().getIMEI()
+                ("imei" //MicroManager.getInstance().getIMEI()
                 + " " + getAppProperty("MIDlet-Version")
                 + " " + DateFormatter.isoString(new Date())).getBytes()
         );
 
-        BearerControl.addListener(Bearer.getInstance());
+        //BearerControl.addListener(Bearer.getInstance());
         try {
             ATManager.getInstance().executeCommandSynchron("AT\r");
 
@@ -243,7 +246,7 @@ public class AppMain extends MIDlet {
 
         if (upgrade) {
             SLog.log(SLog.Informational, "AppMain", "upgrading...");
-            String clientID = Settings.getInstance().getSetting("clientID", MicroManager.getInstance().getIMEI());
+            String clientID = Settings.getInstance().getSetting("clientID", "imei");//MicroManager.getInstance().getIMEI());
             String otapURI = Settings.getInstance().getSetting("otapURI", "");
             String notifyURI = Settings.getInstance().getSetting("notifyURI", "");
             otapURI = StringFunc.replaceString(otapURI, "@", clientID);

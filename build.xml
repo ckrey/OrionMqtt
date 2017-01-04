@@ -1,83 +1,130 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- You may freely edit this file. See commented blocks below for -->
-<!-- some examples of how to customize the build. -->
-<!-- (If you delete it and reopen the project it will be recreated.) -->
-<project name="OwnTracks" default="jar" basedir=".">
-    <description>Builds, tests, and runs the project .</description>
-    <import file="nbproject/build-impl.xml"/>
-    <!--
+<?xml version="1.0"?>
 
-            There exist several targets which are by default empty and which can be
-            used for execution of your tasks. These targets are usually executed
-            before and after some main targets. They are:
+<project name="OwnTracks" default="build" basedir=".">
 
-            pre-init:                 called before initialization of project properties
-            post-init:                called after initialization of project properties
-            pre-preprocess:           called before text preprocessing of sources
-            post-preprocess:          called after text preprocessing of sources
-            pre-compile:              called before source compilation
-            post-compile:             called after source compilation
-            pre-obfuscate:            called before obfuscation 
-            post-obfuscate:           called after obfuscation
-            pre-preverify:            called before preverification
-            post-preverify:           called after preverification
-            pre-jar:                  called before jar building
-            post-jar:                 called after jar building
-            pre-build:                called before final distribution building
-            post-build:               called after final distribution building
-            pre-clean:                called before cleaning build products
-            post-clean:               called after cleaning build products
+	<!-- All: Builds SYSW example and runs unit tests. -->
+	<target name="all" depends="build"/>
+	
+	<!-- Build: Builds the SYSW example. -->
+	<target name="build" depends="compile"/>
+		
+	<!-- Import properties from build.properties file -->
+	<available file="build.properties" property="build.properties.available" />
+	<fail unless="build.properties.available">File build.properties not found.</fail>
+	<property file="build.properties" />
+	
+	<available file="customer.properties" property="customer.properties.available" />
+	<fail unless="customer.properties.available">File customer.properties not found.</fail>
+	<property file="customer.properties" />
+	
+	<!-- Import antenna task definitions -->
+	<taskdef resource="antenna.properties">
+		<classpath path="${wtk.antenna.home}"/>
+	</taskdef>
+	
+	<!-- Sets a totally custom BOOTCLASSPATH. Use this property if 
+			 the set of APIs you need is not covered by the above properties 
+			 (for example because you are using the system libraries provided 
+			 another vendor or you have some important additional libraries). -->
+ 
+	
+	<path id="midpApiPath">
+		  <fileset dir="${wtk.libs.a9nex}" includes="*.jar"/>
+	<!--	 <pathelement path="${wtk.libs.tc65i}/classes.zip;${wtk.libs.tc65ix}/classes.zip"/> -->
+	</path>
+		
+	<property name="wtk.midpapi" value="${toString:midpApiPath}"/>
+	
+		
+	
+	<!-- Define classpath for wtkpackage -->
+    <path id="device.bootclasspath">
+         <pathelement path="${wtk.midpapi}" />
+    </path>
 
-            Example of pluging a my-special-task after the compilation could look like
 
-            <target name="post-compile">
-            <my-special-task>
-            <fileset dir="${build.classes.dir}"/>
-            </my-special-task>
-            </target>
+	<!-- MIDLets -->	
+	<property name="midlet.name" value="A9-NEX OwnTracks" />
+	<property name="midlet.class" value="${main.class.name}" />
 
-            For list of available properties check the imported
-            nbproject/build-impl.xml file.
+	<!-- Input -->
+	<property name="input.src.dir" value="${basedir}/src" />
+	
+	<!-- Output -->
+	<property name="output.dir" value="${basedir}/bin" />
+	<property name="output.classes.dir" value="${output.dir}/classes" />
+	<property name="temp.jad" value="${output.dir}/${app.name}-${app.version}-temp.jad" />
+	<property name="temp.jar" value="${output.dir}/${app.name}-${app.version}-temp.jar" />
+	<property name="out.jad" value="${output.dir}/${app.name}-${app.version}.jad" />
+	<property name="out.jar" value="${output.dir}/${app.name}-${app.version}.jar" />	
+	<property name="output.manifest" value="${output.dir}/MANIFEST.MF" />
 
-            Other way how to customize the build is by overriding existing main targets.
-            The target of interest are:
+	<property name="output.test.classes.dir" value="${output.dir}/test-classes" />
+	<property name="output.junit.report.dir" value="${basedir}/junit-report" />
+	<property name="output.junit.report.html.dir" value="${output.junit.report.dir}/html" />
+	
+	<!-- add your own file patterns as needed -->
+	<patternset id="src.patterns">
+		<include name="general/**" />
+		<include name="org/apache/**" />
+	</patternset>
+	
+	<!-- Target definitions -->
 
-            preprocess:               preprocessing
-            extract-libs:             extraction of libraries and resources
-            compile:                  compilation
-            create-jad:               construction of jad and jar manifest source
-            obfuscate:                obfuscation
-            preverify:                preverification
-            jar:                      jar archive building
-            run:                      execution
-            debug:                    execution in debug mode
-            build:                    building of the final distribution
-            javadoc:                  javadoc generation
+	<target name="compile" depends="clean" description="Compiles, packages and preverifies the application.">
+        <echo> path "${aplicom.sdk.a9nex}" </echo>
+		<mkdir dir="${output.dir}"/>
+		<mkdir dir="${output.classes.dir}"/>
+	
+		<!-- Create a JAD file. -->
+		<wtkjad jadfile="${temp.jad}" jarfile="${temp.jar}" manifest="${output.manifest}"
+			name="${app.name}" vendor="${app.vendor}" version="${app.version}" >
+			<midlet name="${midlet.name}" class="${midlet.class}" />
+	         <!-- These are required for JAD -->
+			 <!-- 0 means no autostart -->
+			 <!-- 1 is reserved for Gemalto application providing IO pin handling -->
+	            <attribute name="Oracle-MIDlet-Autostart" value="0" />
+			  <!-- no restart in case of exception -->
+	            <attribute name="Oracle-MIDlet-Restart" value="false" />
+	            <attribute name="Oracle-MIDlet-Restart-Count" value="100" />
+	            <attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}" />
+	            <attribute name="MicroEdition-Profile" value="IMP-${wtk.midp.version}" />
+		</wtkjad>
+	
+		<!-- Update manifest with correct ME profile. -->
+		<manifest file="${output.manifest}" mode="update">
+			<attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}" />
+			<attribute name="MicroEdition-Profile" value="IMP-${wtk.midp.version}" />
+			 <!-- These are required for JAD -->
+			             <!-- 0 means no autostart -->
+			             <!-- 1 is reserved for Gemalto application providing IO pin handling -->
+			<attribute name="Oracle-MIDlet-Autostart" value="0" />
+			              <!-- no restart in case of exception -->
+			 <attribute name="Oracle-MIDlet-Restart" value="false" />
+			 <attribute name="Oracle-MIDlet-Restart-Count" value="100" />
 
-            Example of overriding the target for project execution could look like
+		</manifest>
+	
+		<!-- Compile the source files. -->
+		<wtkbuild srcdir="${input.src.dir}" destdir="${output.classes.dir}"
+			classpath="${aplicom.sdk.a9nex}" preverify="false" target="1.1" source="1.2"
+			bootclasspathref="device.bootclasspath" >
+			<patternset refid="src.patterns" />
+			
+		</wtkbuild>
 
-            <target name="run" depends="init,jar">
-            <my-special-exec jadfile="${dist.dir}/${dist.jad}"/>
-            </target>
+		<wtkpackage jadfile="${temp.jad}" jarfile="${temp.jar}"
+			libclasspath="${aplicom.sdk.a9nex}"
+			obfuscate="false" preverify="true" verbose="false"
+			manifest="${output.manifest}" cldc="false">
+			<fileset dir="${output.classes.dir}" />
+		</wtkpackage>
+	</target>
 
-            Be careful about correct dependencies when overriding original target. 
-            Again, for list of available properties which you can use check the target 
-            you are overriding in nbproject/build-impl.xml file.
+	<target name="clean" description="Deletes all files generated by the build target.">
+		<delete quiet="true" dir="${output.dir}"/>
+		<delete quiet="true" dir="${output.junit.report.dir}"/>
+	</target> 
 
-            A special target for-all-configs can be used to run some specific targets for
-            all project configurations in a sequence. File nbproject/build-impl.xml 
-            already contains some "for-all" targets:
-    
-            jar-all
-            javadoc-all
-            clean-all
-      
-            Example of definition of target iterating over all project configurations:
-    
-            <target name="jar-all">
-            <property name="target.to.call" value="jar"/>
-            <antcall target="for-all-configs"/>
-            </target>
-
-            -->
+	
 </project>

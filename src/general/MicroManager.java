@@ -5,16 +5,16 @@
  */
 package general;
 
-import choral.io.InfoMicro;
-import choral.io.MovListener;
-import choral.io.MovSens;
+//import choral.io.InfoMicro;
+//import choral.io.MovListener;
+//import choral.io.MovSens;
 import java.io.IOException;
 
 /**
  *
  * @author Christoph Krey <krey.christoph@gmail.com>
  */
-public class MicroManager implements MovListener {
+public class MicroManager { //implements MovListener {
 
     private String ati = "unknown";
     private String imei = "unknown";
@@ -23,7 +23,7 @@ public class MicroManager implements MovListener {
     private String bootRelease = "unknown";
     private String javaRelease = "unknown";
 
-    final private MovSens movSens;
+    //final private MovSens movSens;
     private boolean moved = false;
 
     private MicroManager() {
@@ -45,43 +45,43 @@ public class MicroManager implements MovListener {
         lines = StringFunc.split(response, "\r\n");
         imsi = lines[1];
 
-        InfoMicro infoMicro = new InfoMicro();
-        try {
-            release = infoMicro.getRelease();
-            bootRelease = infoMicro.getBootRelease();
-            javaRelease = infoMicro.getJavaRelease();
-        } catch (IOException ie) {
+        //InfoMicro infoMicro = new InfoMicro();
+        //try {
+            //release = infoMicro.getRelease();
+            //bootRelease = infoMicro.getBootRelease();
+            //javaRelease = infoMicro.getJavaRelease();
+        //} catch (IOException ie) {
             //
-        }
+        //}
 
-        movSens = new MovSens();
-        movSens.addMovListener(this);
+        //movSens = new MovSens();
+        //movSens.addMovListener(this);
 
-        if (Settings.getInstance().getSetting("motion", 4) > 0) {
-            try {
-                movSens.setMovSens(Settings.getInstance().getSetting("motion", 4));
-                movSens.movSensOn();
-            } catch (IOException ioe) {
-                SLog.log(SLog.Error, "MicroManager", "IOException movSensOn");
-            }
-        } else {
-            try {
-                movSens.movSensOff();
-            } catch (IOException ioe) {
-                SLog.log(SLog.Error, "MicroManager", "IOException movSensOff");
-            }
-        }
+        //if (Settings.getInstance().getSetting("motion", 4) > 0) {
+            //try {
+                //movSens.setMovSens(Settings.getInstance().getSetting("motion", 4));
+                //movSens.movSensOn();
+            //} catch (IOException ioe) {
+                //SLog.log(SLog.Error, "MicroManager", "IOException movSensOn");
+            //}
+        //} else {
+            //try {
+                //movSens.movSensOff();
+            //} catch (IOException ioe) {
+                //SLog.log(SLog.Error, "MicroManager", "IOException movSensOff");
+            //}
+        //}
     }
 
-    public void movSensEvent(String event) {
-        SLog.log(SLog.Debug, "MicroManager", "movSensEvent " + event);
-
-        if (event.equalsIgnoreCase("^MOVE: 0")) {
-            //moved = false;
-        } else if (event.equalsIgnoreCase("^MOVE: 1")) {
-            moved = true;
-        }
-    }
+    //public void movSensEvent(String event) {
+        //SLog.log(SLog.Debug, "MicroManager", "movSensEvent " + event);
+//
+        //if (event.equalsIgnoreCase("^MOVE: 0")) {
+            ////moved = false;
+        //} else if (event.equalsIgnoreCase("^MOVE: 1")) {
+            //moved = true;
+        //}
+    //}
 
     public static MicroManager getInstance() {
         return MicroManagerHolder.INSTANCE;

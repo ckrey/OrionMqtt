@@ -11,6 +11,7 @@ bin/
 .mtj.tmp/
 
 .swp
+tmp*
 
 /build/
 /dist/

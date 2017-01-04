@@ -5,10 +5,11 @@
  */
 package general;
 
-import com.cinterion.misc.Watchdog;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.cinterion.misc.Watchdog;
 
 /**
  *

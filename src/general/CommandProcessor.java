@@ -2,6 +2,7 @@ package general;
 
 import java.util.Date;
 import java.util.Enumeration;
+
 import javax.microedition.midlet.MIDletStateChangeException;
 
 /**

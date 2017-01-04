@@ -5,11 +5,11 @@
  */
 package general;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import choral.io.PowerManager;
-import java.io.IOException;
+//import choral.io.PowerManager;
 
 /**
  *
@@ -23,13 +23,13 @@ public class BatteryManager {
     private double lastBatteryVoltage = -1.0;
     private double lastExternalVoltage = -1.0;
 
-    private final PowerManager powerManager;
+//  private final PowerManager powerManager;
     private final Timer timer;
     private final TimerTask timerTask;
 
     private BatteryManager() {
         batteryVoltage = 0.0;
-        powerManager = new PowerManager();
+        //powerManager = new PowerManager();
         timer = new Timer();
         timerTask = new BatteryRequestTimerTask();
         timer.schedule(timerTask, 0, BatteryRequestLoop * 1000);
@@ -65,8 +65,8 @@ public class BatteryManager {
     }
 
     public double getExternalVoltage() {
-        try {
-            double voltage = powerManager.getDoubleVIN();
+        //try {
+            double voltage = 12; //powerManager.getDoubleVIN();
             long longVoltage = (long) (voltage * 1000.0);
             voltage = longVoltage / 1000.0;
 
@@ -84,10 +84,10 @@ public class BatteryManager {
                 }
             }
             return voltage;
-        } catch (IOException ioe) {
-            SLog.log(SLog.Error, "BatteryManager", "IOException powerManager.getDoubleVIN");
-            return 0.0;
-        }
+        //} catch (IOException ioe) {
+            //SLog.log(SLog.Error, "BatteryManager", "IOException powerManager.getDoubleVIN");
+            //return 0.0;
+        //}
     }
 
     public String getExternalVoltageString() {
@@ -119,21 +119,23 @@ public class BatteryManager {
     }
 
     public boolean reboot() {
-        try {
-            return (powerManager.setReboot() == 1);
-        } catch (IOException ioe) {
-            SLog.log(SLog.Error, "BatteryManager", "IOException powerManager.setReboot");
-            return false;
-        }
+	return false;
+        //try {
+            //return (powerManager.setReboot() == 1);
+        //} catch (IOException ioe) {
+            //SLog.log(SLog.Error, "BatteryManager", "IOException powerManager.setReboot");
+            //return false;
+        //}
     }
 
     public boolean lowPowerMode() {
-        try {
-            return (powerManager.setLowPwrMode() == 1);
-        } catch (IOException ioe) {
-            SLog.log(SLog.Error, "BatteryManager", "IOException powerManager.setLowPowerMode");
-            return false;
-        }
+        return false;
+        //try {
+            //return (powerManager.setLowPwrMode() == 1);
+        //} catch (IOException ioe) {
+            //SLog.log(SLog.Error, "BatteryManager", "IOException powerManager.setLowPowerMode");
+            //return false;
+        //}
     }
 
     class BatteryRequestTimerTask extends TimerTask {

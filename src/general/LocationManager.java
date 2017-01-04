@@ -1,10 +1,11 @@
 package general;
 
-import java.util.Date;
-import java.util.TimerTask;
-import java.util.Timer;
-import choral.io.UserLed;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+//import choral.io.UserLed;
 
 /**
  *
@@ -16,7 +17,7 @@ public class LocationManager {
     private TimerTask timerTask = null;
     private boolean fix = false;
     private boolean timeout = false;
-    final private UserLed userLed;
+    //final private UserLed userLed;
 
     private boolean stationary = false;
     private boolean once = false;
@@ -45,7 +46,7 @@ public class LocationManager {
 
     private LocationManager() {
         fix = false;
-        userLed = new UserLed();
+        //userLed = new UserLed();
         setLED(false);
         startTimer();
         persistentRecord = new PersistentRecord("LocationManager");
@@ -99,11 +100,11 @@ public class LocationManager {
 
     private void setLED(boolean on) {
         SLog.log(SLog.Debug, "LocationManager", "Setting LED: " + on);
-        try {
-            userLed.setLed(on);
-        } catch (IOException ioe) {
-            SLog.log(SLog.Error, "LocationManager", "IOException UserLed.setLed");
-        }
+        //try {
+            //userLed.setLed(on);
+        //} catch (IOException ioe) {
+            //SLog.log(SLog.Error, "LocationManager", "IOException UserLed.setLed");
+        //}
     }
 
     public boolean isFix() {

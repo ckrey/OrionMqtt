@@ -5,12 +5,12 @@
  */
 package general;
 
+import javax.microedition.rms.InvalidRecordIDException;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 import javax.microedition.rms.RecordStoreNotOpenException;
-import javax.microedition.rms.InvalidRecordIDException;
 
 /**
  *
