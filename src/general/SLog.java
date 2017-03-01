@@ -9,7 +9,9 @@ package general;
 import java.io.*;
 import java.util.*;
 import javax.microedition.io.Connector;
+/* aplicom
 import com.cinterion.io.file.FileConnection;
+*/
 
 /**
  * Save important events on a log file
@@ -41,7 +43,7 @@ public class SLog {
 
     public static void log(String priority, String component, String error) {
         if (priority.equals(Debug)) {
-            String[] fields = StringFunc.split(Settings.getInstance().getSetting("dbgComp", "none"), ",");
+            String[] fields = StringFunc.split(Settings.getInstance().getSetting("dbgComp", "all"), ",");
             if (!StringFunc.isInStringArray("all", fields)) {
                 if (!StringFunc.isInStringArray(component, fields)) {
                     return;
@@ -83,6 +85,7 @@ public class SLog {
     }
 
     private static void write(String error) {
+	    /* aplicom
         try {
             FileConnection fconn = (FileConnection) Connector.open(url + fileLog);
             if (!fconn.exists()) {
@@ -125,11 +128,13 @@ public class SLog {
             );
             System.err.flush();
         }
+	*/
     }
 
     private static StringBuffer readLog(String fileName) {
         StringBuffer buffer = new StringBuffer();
         getLogSemaphore();
+	/* aplicom
 
         try {
             FileConnection fconn = (FileConnection) Connector.open(fileName);
@@ -157,6 +162,7 @@ public class SLog {
             );
             System.err.flush();
         }
+	*/
         freeLogSemaphore();
         return buffer;
     }
@@ -172,6 +178,7 @@ public class SLog {
     public static void deleteLog() {
         getLogSemaphore();
 
+	/* aplicom
         try {
             FileConnection fconn1 = (FileConnection) Connector.open(url + fileOLD);
             System.err.println(DateFormatter.isoString(new Date())
@@ -254,6 +261,7 @@ public class SLog {
             );
             System.err.flush();
         }
+    */
         freeLogSemaphore();
     }
 

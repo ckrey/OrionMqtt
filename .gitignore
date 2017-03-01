@@ -10,7 +10,8 @@ bin/
 .settings/
 .mtj.tmp/
 
-.swp
+*.swp
+*~
 
 /build/
 /dist/

@@ -5,16 +5,18 @@
  */
 package general;
 
+/* aplicom
 import choral.io.InfoMicro;
 import choral.io.MovListener;
 import choral.io.MovSens;
+*/
 import java.io.IOException;
 
 /**
  *
  * @author Christoph Krey <krey.christoph@gmail.com>
  */
-public class MicroManager implements MovListener {
+public class MicroManager /* aplicom implements MovListener */ {
 
     private String ati = "unknown";
     private String imei = "unknown";
@@ -23,7 +25,9 @@ public class MicroManager implements MovListener {
     private String bootRelease = "unknown";
     private String javaRelease = "unknown";
 
+    /* aplicom
     final private MovSens movSens;
+    */
     private boolean moved = false;
 
     private MicroManager() {
@@ -45,6 +49,7 @@ public class MicroManager implements MovListener {
         lines = StringFunc.split(response, "\r\n");
         imsi = lines[1];
 
+	/* aplicom
         InfoMicro infoMicro = new InfoMicro();
         try {
             release = infoMicro.getRelease();
@@ -71,8 +76,10 @@ public class MicroManager implements MovListener {
                 SLog.log(SLog.Error, "MicroManager", "IOException movSensOff");
             }
         }
+	*/
     }
 
+    /*
     public void movSensEvent(String event) {
         SLog.log(SLog.Debug, "MicroManager", "movSensEvent " + event);
 
@@ -82,6 +89,7 @@ public class MicroManager implements MovListener {
             moved = true;
         }
     }
+    */
 
     public static MicroManager getInstance() {
         return MicroManagerHolder.INSTANCE;

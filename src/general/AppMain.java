@@ -5,9 +5,11 @@
  */
 package general;
 
-import choral.io.CheckUpgrade;
+/* aplicom
+ * import choral.io.CheckUpgrade;
+ * import com.m2mgo.util.GPRSConnectOptions; 
+ */
 import com.cinterion.io.BearerControl;
-import com.m2mgo.util.GPRSConnectOptions;
 import java.util.Date;
 import javax.microedition.midlet.*;
 
@@ -47,7 +49,9 @@ public class AppMain extends MIDlet {
 
     protected void startApp() throws MIDletStateChangeException {
         AppMain.appMain = this;
-        CheckUpgrade fw = new CheckUpgrade("");
+ 	/* aplicom
+	 * CheckUpgrade fw = new CheckUpgrade("");
+	 */
 
         Settings settings = Settings.getInstance();
         SLog.log(SLog.Informational, "AppMain", "Running "
@@ -104,13 +108,15 @@ public class AppMain extends MIDlet {
 
             ATManager.getInstance().executeCommandSynchron("AT^SBC=5000\r");
 
-            ATManager.getInstance().executeCommandSynchron("at^sjnet="
-                    + "\"" + GPRSConnectOptions.getConnectOptions().getBearerType() + "\","
-                    + "\"" + GPRSConnectOptions.getConnectOptions().getAPN() + "\","
-                    + "\"" + GPRSConnectOptions.getConnectOptions().getUser() + "\","
-                    + "\"" + GPRSConnectOptions.getConnectOptions().getPasswd() + "\","
-                    + "\"\"," // DNS
-                    + "0\r"); // TIMEOUT
+            /* aplicom
+	     * ATManager.getInstance().executeCommandSynchron("at^sjnet="
+             * "\"" + GPRSConnectOptions.getConnectOptions().getBearerType() + "\","
+             * + "\"" + GPRSConnectOptions.getConnectOptions().getAPN() + "\","
+             * + "\"" + GPRSConnectOptions.getConnectOptions().getUser() + "\","
+             * + "\"" + GPRSConnectOptions.getConnectOptions().getPasswd() + "\","
+             * + "\"\"," // DNS
+             * + "0\r"); // TIMEOUT
+	     */
 
             ATManager.getInstance().executeCommandSynchron("AT^SCKS=1\r");
 

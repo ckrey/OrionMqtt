@@ -3,7 +3,9 @@ package general;
 import java.util.Date;
 import java.util.TimerTask;
 import java.util.Timer;
+/* aplicom
 import choral.io.UserLed;
+*/
 import java.io.IOException;
 
 /**
@@ -16,7 +18,9 @@ public class LocationManager {
     private TimerTask timerTask = null;
     private boolean fix = false;
     private boolean timeout = false;
+    /* aplicom
     final private UserLed userLed;
+    */
 
     private boolean stationary = false;
     private boolean once = false;
@@ -45,7 +49,9 @@ public class LocationManager {
 
     private LocationManager() {
         fix = false;
+	/* aplicom
         userLed = new UserLed();
+	*/
         setLED(false);
         startTimer();
         persistentRecord = new PersistentRecord("LocationManager");
@@ -99,11 +105,13 @@ public class LocationManager {
 
     private void setLED(boolean on) {
         SLog.log(SLog.Debug, "LocationManager", "Setting LED: " + on);
+	/* aplicom
         try {
             userLed.setLed(on);
         } catch (IOException ioe) {
             SLog.log(SLog.Error, "LocationManager", "IOException UserLed.setLed");
         }
+	*/
     }
 
     public boolean isFix() {

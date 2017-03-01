@@ -8,7 +8,9 @@ package general;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/* aplicom
 import choral.io.PowerManager;
+*/
 import java.io.IOException;
 
 /**
@@ -23,13 +25,17 @@ public class BatteryManager {
     private double lastBatteryVoltage = -1.0;
     private double lastExternalVoltage = -1.0;
 
-    private final PowerManager powerManager;
+    /* aplicom
+     * private final PowerManager powerManager;
+     */
     private final Timer timer;
     private final TimerTask timerTask;
 
     private BatteryManager() {
         batteryVoltage = 0.0;
-        powerManager = new PowerManager();
+	/* aplicom
+	powerManager = new PowerManager();
+	*/
         timer = new Timer();
         timerTask = new BatteryRequestTimerTask();
         timer.schedule(timerTask, 0, BatteryRequestLoop * 1000);
@@ -65,6 +71,7 @@ public class BatteryManager {
     }
 
     public double getExternalVoltage() {
+	    /* aplicom
         try {
             double voltage = powerManager.getDoubleVIN();
             long longVoltage = (long) (voltage * 1000.0);
@@ -88,6 +95,8 @@ public class BatteryManager {
             SLog.log(SLog.Error, "BatteryManager", "IOException powerManager.getDoubleVIN");
             return 0.0;
         }
+	*/
+	    return 0.0;
     }
 
     public String getExternalVoltageString() {
@@ -119,21 +128,27 @@ public class BatteryManager {
     }
 
     public boolean reboot() {
+	    /* aplicom
         try {
             return (powerManager.setReboot() == 1);
         } catch (IOException ioe) {
             SLog.log(SLog.Error, "BatteryManager", "IOException powerManager.setReboot");
             return false;
         }
+	*/
+	    return false;
     }
 
     public boolean lowPowerMode() {
+	    /* aplicom
         try {
             return (powerManager.setLowPwrMode() == 1);
         } catch (IOException ioe) {
             SLog.log(SLog.Error, "BatteryManager", "IOException powerManager.setLowPowerMode");
             return false;
         }
+	*/
+	    return false;
     }
 
     class BatteryRequestTimerTask extends TimerTask {

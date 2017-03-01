@@ -5,7 +5,9 @@
  */
 package general;
 
+/* aplicom
 import choral.io.Can;
+ */
 import java.io.IOException;
 import java.util.Hashtable;
 
@@ -42,6 +44,7 @@ public class CanManagerThread extends Thread {
     }
 
     public void run() {
+	/* aplicom
         try {
             Can can;
             can = new Can();
@@ -50,6 +53,7 @@ public class CanManagerThread extends Thread {
         } catch (IOException ioe) {
             SLog.log(SLog.Error, "Can", "IOException " + ioe);
         }
+	*/
 
         while (!terminate) {
             long fms = Settings.getInstance().getSetting("fmsInterval", 0);
@@ -57,6 +61,7 @@ public class CanManagerThread extends Thread {
 
             if (fms != 0 && System.currentTimeMillis() / 1000L > lastFms + fms) {
                 lastFms = System.currentTimeMillis() / 1000L;
+		/* aplicom
                 try {
                     Can can;
                     can = new Can();
@@ -84,12 +89,14 @@ public class CanManagerThread extends Thread {
                 } catch (IOException ioe) {
                     SLog.log(SLog.Error, "Can", "IOException " + ioe);
                 }
+		*/
             }
 
             long obd2 = Settings.getInstance().getSetting("obd2Interval", 0);
             SLog.log(SLog.Debug, "Can", "obd2=" + obd2 + " lastObd2=" + lastObd2);
             if (obd2 != 0 && System.currentTimeMillis() / 1000L > lastObd2 + obd2) {
                 lastObd2 = System.currentTimeMillis() / 1000L;
+		/* aplicom
                 String odb2Modes = Settings.getInstance().getSetting("obd2Modes",
                         "STD,EXT");
                 String[] modes = StringFunc.split(odb2Modes, ",");
@@ -114,12 +121,13 @@ public class CanManagerThread extends Thread {
                         }
                     }
                 }
+		*/
             }
 
             long sensors = Settings.getInstance().getSetting("obd2Sensors", 0);
             if (sensors != 0 && System.currentTimeMillis() / 1000L > lastSensors + sensors) {
                 lastSensors = System.currentTimeMillis() / 1000L;
-
+		/* aplicom
                 String odb2Modes = Settings.getInstance().getSetting("obd2Modes",
                         "STD,EXT");
                 String[] modes = StringFunc.split(odb2Modes, ",");
@@ -144,6 +152,7 @@ public class CanManagerThread extends Thread {
                         }
                     }
                 }
+		*/
             }
 
             try {
@@ -154,6 +163,7 @@ public class CanManagerThread extends Thread {
         }
     }
 
+    /* aplicom
     private void obd2(String mode, int speed, String address) {
         try {
             Can can;
@@ -534,4 +544,5 @@ public class CanManagerThread extends Thread {
             }
         }
     }
+    */
 }
