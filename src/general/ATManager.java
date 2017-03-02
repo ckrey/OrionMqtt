@@ -13,12 +13,14 @@ public class ATManager implements ATCommandListener, ATCommandResponseListener {
     private ATCommand atCommand;
 
     public ATManager() {
+	    /* aplicom
         try {
             atCommand = new ATCommand(true);
             atCommand.addListener(this);
         } catch (ATCommandFailedException atcfe) {
             SLog.log(SLog.Critical, "ATManager", "ATCommandFailedException new ATCommand");
         }
+	*/
     }
 
     public static ATManager getInstance() {
@@ -44,6 +46,7 @@ public class ATManager implements ATCommandListener, ATCommandResponseListener {
 
     private synchronized String execute(String command, String text, ATCommandResponseListener listener) {
         String response = "";
+	/* aplicom
         try {
             if (listener == null) {
                 String logCommand = command;
@@ -70,6 +73,7 @@ public class ATManager implements ATCommandListener, ATCommandResponseListener {
             logResponse = StringFunc.replaceString(logResponse, "\r", "\\r");
             SLog.log(SLog.Warning, "ATManager", logResponse);
         }
+	*/
         return response;
     }
 

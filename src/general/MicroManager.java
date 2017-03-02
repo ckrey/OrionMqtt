@@ -33,8 +33,9 @@ public class MicroManager /* aplicom implements MovListener */ {
     private MicroManager() {
         String response;
         String lines[];
-        response = ATManager.getInstance().executeCommandSynchron("ATI\r");
 
+        response = ATManager.getInstance().executeCommandSynchron("ATI\r");
+	/* aplicom
         lines = StringFunc.split(response, "\r\n");
         ati = lines[1];
         for (int i = 2; i < lines.length - 3; i++) {
@@ -49,7 +50,6 @@ public class MicroManager /* aplicom implements MovListener */ {
         lines = StringFunc.split(response, "\r\n");
         imsi = lines[1];
 
-	/* aplicom
         InfoMicro infoMicro = new InfoMicro();
         try {
             release = infoMicro.getRelease();
