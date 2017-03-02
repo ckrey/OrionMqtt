@@ -7,20 +7,44 @@
 package general;
 
 import com.cinterion.io.*;
+/* aplicom */
+import fi.aplicom.a1.system.Sysw;
+import fi.aplicom.a1.system.at.AtManager;
+import fi.aplicom.a1.system.at.IAtManager;
+import fi.aplicom.a1.system.at.IAtCommand;
+import fi.aplicom.a1.system.at.IUrcHandler;
+import fi.aplicom.a1.system.at.IAtResponseListener;
+/* end aplicom */
 
+/* aplicom */
+public class ATManager implements IUrcHandler, IAtResponseListener {
+    private IAtManager atManager;
+    private IAtCommand atCommand;
+    private Sysw sysw;
+/* end aplicom */
+
+/* not aplicom 
 public class ATManager implements ATCommandListener, ATCommandResponseListener {
-
     private ATCommand atCommand;
+/* end not aplicom */
 
     public ATManager() {
-	    /* aplicom
+
         try {
+	    /* aplicom */
+	    sysw = Sysw.getInstance();
+	    atManager = sysw.getSharedAtManager();
+	    atCommand = atManager.getAtCommand();
+        } catch (Exception e) {
+            SLog.log(SLog.Critical, "ATManager", "Exception new ATCommand");
+	    /* end aplicom */
+	    /* not aplicom
             atCommand = new ATCommand(true);
-            atCommand.addListener(this);
         } catch (ATCommandFailedException atcfe) {
             SLog.log(SLog.Critical, "ATManager", "ATCommandFailedException new ATCommand");
+	    /* end not aplicom */
         }
-	*/
+        atCommand.addListener(this);
     }
 
     public static ATManager getInstance() {
@@ -44,9 +68,13 @@ public class ATManager implements ATCommandListener, ATCommandResponseListener {
         String response = execute(command, null, this);
     }
 
+    /* aplicom */
+    private synchronized String execute(String command, String text, IAtResponseListener listener) {
+    /* end aplicom */
+    /* not aplicom 
     private synchronized String execute(String command, String text, ATCommandResponseListener listener) {
+    /* end not aplicom */
         String response = "";
-	/* aplicom
         try {
             if (listener == null) {
                 String logCommand = command;
@@ -64,8 +92,14 @@ public class ATManager implements ATCommandListener, ATCommandResponseListener {
             } else {
                 atCommand.send(command, listener);
             }
+	/* aplicom */
+        } catch (Exception e) {
+            SLog.log(SLog.Alert, "ATManager", "Exception send " + command);
+	/* end aplicom */
+	/* not aplicom 
         } catch (ATCommandFailedException atcfe) {
             SLog.log(SLog.Alert, "ATManager", "ATCommandFailedException send " + command);
+	/* end not aplicom */
         }
         if (response.indexOf("ERROR") >= 0) {
             String logResponse = response;
@@ -73,11 +107,15 @@ public class ATManager implements ATCommandListener, ATCommandResponseListener {
             logResponse = StringFunc.replaceString(logResponse, "\r", "\\r");
             SLog.log(SLog.Warning, "ATManager", logResponse);
         }
-	*/
         return response;
     }
 
+    /* aplicom */
+    public void handleUrc(String event) {
+    /* end aplicom */
+    /* not aplicom 
     public void ATEvent(String event) {
+    /* end not aplicom */
         if (event == null) {
             return;
         }

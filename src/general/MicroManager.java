@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 package general;
+/* aplicom */ 
+import fi.aplicom.a1.system.Sysw;
+/* end aplicom */
 
-/* aplicom
+/* not aplicom
 import choral.io.InfoMicro;
 import choral.io.MovListener;
 import choral.io.MovSens;
-*/
+end not aplicom */
 import java.io.IOException;
 
 /**
@@ -24,32 +27,53 @@ public class MicroManager /* aplicom implements MovListener */ {
     private String release = "unknown";
     private String bootRelease = "unknown";
     private String javaRelease = "unknown";
-
-    /* aplicom
-    final private MovSens movSens;
-    */
     private boolean moved = false;
 
+    /* aplicom */
+    final private Sysw sysw;
+    /* end aplicom */
+    /* not aplicom
+    final private MovSens movSens;
+    end not aplicom */
+
     private MicroManager() {
+	/* aplicom */
+	sysw = Sysw.getInstance();
+	try {
+	    sysw.initialize(true);
+	        
+        } catch (Exception ex) {
+	    ex.printStackTrace();
+            SLog.log(SLog.Error, "MicroManager", "Exception sysw.initialize");
+        }
+	
+	/* end aplicom */
+
         String response;
         String lines[];
 
         response = ATManager.getInstance().executeCommandSynchron("ATI\r");
-	/* aplicom
         lines = StringFunc.split(response, "\r\n");
-        ati = lines[1];
-        for (int i = 2; i < lines.length - 3; i++) {
-            ati = ati + "," + lines[i];
-        }
+	if (lines.length > 1) {
+	    ati = lines[1];
+	    for (int i = 2; i < lines.length - 3; i++) {
+		ati = ati + "," + lines[i];
+	    }
+	}
 
         response = ATManager.getInstance().executeCommandSynchron("AT+CGSN\r");
         lines = StringFunc.split(response, "\r\n");
-        imei = lines[1];
+	if (lines.length > 1) {
+	    imei = lines[1];
+	}
 
         response = ATManager.getInstance().executeCommandSynchron("AT+CIMI\r");
         lines = StringFunc.split(response, "\r\n");
-        imsi = lines[1];
+	if (lines.length > 1) {
+	    imsi = lines[1];
+	}
 
+	/* not aplicom
         InfoMicro infoMicro = new InfoMicro();
         try {
             release = infoMicro.getRelease();
@@ -76,7 +100,7 @@ public class MicroManager /* aplicom implements MovListener */ {
                 SLog.log(SLog.Error, "MicroManager", "IOException movSensOff");
             }
         }
-	*/
+	end not aplicom */
     }
 
     /*
