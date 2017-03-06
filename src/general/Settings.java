@@ -8,9 +8,12 @@ package general;
 import java.util.*;
 import java.io.*;
 import javax.microedition.io.Connector;
-/* aplicom
+/* aplicom */
+import javax.microedition.io.file.FileConnection;
+/* end aplicom */
+/* not aplicom
 import com.cinterion.io.file.FileConnection;
-*/
+/* end not aplicom */
 
 /**
  *
@@ -115,7 +118,6 @@ public class Settings {
             hashTable = new Hashtable();
         }
 
-	/* aplicom
         try {
             FileConnection fconn = (FileConnection) Connector.open(filePath + fileName);
             if (!fconn.exists()) {
@@ -183,7 +185,6 @@ public class Settings {
         } catch (IOException ioe) {
             SLog.log(SLog.Error, "Settings", "load IOException");
         }
-	*/
     }
 
     public synchronized void writeSettings() {
@@ -191,7 +192,6 @@ public class Settings {
             loadSettings();
         }
 
-	/*
         FileConnection file;
 
         // rename file to .old
@@ -263,7 +263,6 @@ public class Settings {
         } catch (IOException ioe) {
             SLog.log(SLog.Error, "Settings", "delete .old IOException");
         }
-	*/
     }
 
     public Enumeration keys() {

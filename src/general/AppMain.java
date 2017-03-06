@@ -7,8 +7,8 @@ package general;
 
 /* aplicom
  * import choral.io.CheckUpgrade;
- * import com.m2mgo.util.GPRSConnectOptions; 
  */
+import com.m2mgo.util.GPRSConnectOptions; 
 import com.cinterion.io.BearerControl;
 import java.util.Date;
 import javax.microedition.midlet.*;
@@ -96,6 +96,7 @@ public class AppMain extends MIDlet {
             gpio6WatchDogTask = new GPIO6WatchDogTask();
 
             SLog.log(SLog.Debug, "AppMain", "Set AUTOSTART...");
+	    /* not aplicom
             ATManager.getInstance().executeCommandSynchron("at^scfg=\"Userware/Autostart/AppName\",\"\",\"a:/app/"
                     + AppMain.getInstance().getAppProperty("MIDlet-Name") + ".jar\"\r");
             ATManager.getInstance().executeCommandSynchron("at^scfg=\"Userware/Autostart/Delay\",\"\",10\r");
@@ -107,18 +108,19 @@ public class AppMain extends MIDlet {
             }
 
             ATManager.getInstance().executeCommandSynchron("AT^SBC=5000\r");
+	    /* end not aplicom */
 
-            /* aplicom
-	     * ATManager.getInstance().executeCommandSynchron("at^sjnet="
-             * "\"" + GPRSConnectOptions.getConnectOptions().getBearerType() + "\","
-             * + "\"" + GPRSConnectOptions.getConnectOptions().getAPN() + "\","
-             * + "\"" + GPRSConnectOptions.getConnectOptions().getUser() + "\","
-             * + "\"" + GPRSConnectOptions.getConnectOptions().getPasswd() + "\","
-             * + "\"\"," // DNS
-             * + "0\r"); // TIMEOUT
-	     */
+	    ATManager.getInstance().executeCommandSynchron("at^sjnet="
+		    + "\"" + GPRSConnectOptions.getConnectOptions().getBearerType() + "\","
+		    + "\"" + GPRSConnectOptions.getConnectOptions().getAPN() + "\","
+		    + "\"" + GPRSConnectOptions.getConnectOptions().getUser() + "\","
+		    + "\"" + GPRSConnectOptions.getConnectOptions().getPasswd() + "\","
+		    + "\"\"," // DNS
+		    + "0\r"); // TIMEOUT
 
+            /* not aplicom
             ATManager.getInstance().executeCommandSynchron("AT^SCKS=1\r");
+	    /* end not aplicom */
 
             BatteryManager.getInstance();
             SensorManager.getInstance();

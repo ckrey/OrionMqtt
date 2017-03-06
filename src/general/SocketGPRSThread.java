@@ -229,7 +229,9 @@ public class SocketGPRSThread extends Thread {
     }
 
     public void open() {
+	    /* not aplicom
         ATManager.getInstance().executeCommandSynchron("at^smong\r");
+	/* end not aplicom */
         ATManager.getInstance().executeCommandSynchron("at+cops=3,2\r");
         ATManager.getInstance().executeCommandSynchron("at+cgreg=2\r");
 

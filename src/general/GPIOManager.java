@@ -15,6 +15,7 @@ public class GPIOManager {
     public void open() {
         close();
 
+	/* not aplicom
         ATManager.getInstance().executeCommandSynchron("at^spio=1\r");
 
         ATManager.getInstance().executeCommandSynchron("at^scpin=1,0,0\r");
@@ -44,9 +45,11 @@ public class GPIOManager {
         ATManager.getInstance().executeCommandSynchron("at^scpin=1,5,1,0\r");
         ATManager.getInstance().executeCommandSynchron("at^scpin=1,8,1,0\r");
         ATManager.getInstance().executeCommandSynchron("at^scpin=1,9,1,0\r");
+	/* end not aplicom */
     }
 
     public void close() {
+	/* not aplicom
         ATManager.getInstance().executeCommandSynchron("at^scpol=0,0\r");
         ATManager.getInstance().executeCommandSynchron("at^scpol=0,2\r");
         if (MicroManager.getInstance().isAdvanced()) {
@@ -68,6 +71,7 @@ public class GPIOManager {
         ATManager.getInstance().executeCommandSynchron("at^scpin=0,9\r");
 
         ATManager.getInstance().executeCommandSynchron("at^spio=0\r");
+	/* end not aplicom */
     }
 
     public static GPIOManager getInstance() {

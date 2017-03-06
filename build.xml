@@ -48,10 +48,8 @@
 	<!-- Output -->
 	<property name="output.dir" value="${basedir}/bin" />
 	<property name="output.classes.dir" value="${output.dir}/classes" />
-	<property name="temp.jad" value="${output.dir}/${app.name}-${app.version}-temp.jad" />
-	<property name="temp.jar" value="${output.dir}/${app.name}-${app.version}-temp.jar" />
-	<property name="out.jad" value="${output.dir}/${app.name}-${app.version}.jad" />
-	<property name="out.jar" value="${output.dir}/${app.name}-${app.version}.jar" />	
+	<property name="out.jad" value="${output.dir}/${app.name}.jad" />
+	<property name="out.jar" value="${output.dir}/${app.name}.jar" />	
 	<property name="output.manifest" value="${output.dir}/MANIFEST.MF" />
 
 	<property name="output.test.classes.dir" value="${output.dir}/test-classes" />
@@ -76,7 +74,7 @@
 		<mkdir dir="${output.classes.dir}"/>
 	
 		<!-- Create a JAD file. -->
-		<wtkjad jadfile="${temp.jad}" jarfile="${temp.jar}" manifest="${output.manifest}"
+		<wtkjad jadfile="${out.jad}" jarfile="${out.jar}" manifest="${output.manifest}"
 			name="${app.name}" vendor="${app.vendor}" version="${app.version}" >
 			<midlet name="${midlet.name}" class="${midlet.class}" />
 	         <!-- These are required for JAD -->
@@ -115,7 +113,7 @@
 			
 		</wtkbuild>
 
-		<wtkpackage jadfile="${temp.jad}" jarfile="${temp.jar}"
+		<wtkpackage jadfile="${out.jad}" jarfile="${out.jar}"
 			libclasspath="${aplicom.sdk.a9nex}"
 			obfuscate="false" preverify="true" verbose="false"
 			manifest="${output.manifest}" cldc="false">
