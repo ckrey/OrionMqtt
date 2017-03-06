@@ -9,6 +9,7 @@ deployed/
 bin/
 .settings/
 .mtj.tmp/
+OwnTracks.properties
 
 *.swp
 *~
